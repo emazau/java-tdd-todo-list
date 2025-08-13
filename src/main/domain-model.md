@@ -18,7 +18,6 @@ I want to add tasks to my todo list.
 | Classes                                            | Members           | Methods       | Scenario                         | Outputs |
 |----------------------------------------------------|-------------------|---------------|----------------------------------|---------|
 | `TodoList(List of Task objects (Also A object??))` | (`Task (Object)`) | `Add(Task())` | Add a task to todolist (success) | true    |
-|                                                    |                   |               | if task not exist                | false   |
 
 I want to see all the tasks in my todo list.
 
@@ -48,17 +47,16 @@ I want to see all the tasks in my list ordered alphabetically in ascending order
 | `TodoList(List of Task objects (Also A object??))` | (`Task (Object)`) | `Add(Task())`           | Add a task to todolist (success)              | true                           |
 |                                                    |                   |                         | if task not exist                             | false                          |
 |                                                    |                   | `completed()`           | if zero completed tasks                       | false                          |   
-|                                                    |                   |                         | if there are completed tasks                  | TodoList object with the tasks |   
+|                                                    |                   |                         | if there are completed tasks                  | true                           |   
 |                                                    |                   | `notCompleted()`        | if all tasks completed or zero tasks          | false                          |   
 |                                                    |                   |                         | if there are incompleted  tasks               | todolist with the tasks        |   
-|                                                    |                   | `search(Task())`        | If Task is null/not found                     | false                          |   
-|                                                    |                   |                         | if task is found                              | returns the task               |   
+|                                                    |                   | `search(Task())`        | if task is found                              | true                           |   
 |                                                    |                   | `remove(Task())`        | if task is not found                          | false                          |   
 |                                                    |                   |                         | if task is found                              | returns the deleted task       |   
 |                                                    |                   | `ascending()`           | if todo list is empty                         | false                          |   
-|                                                    |                   |                         | if todo list has tasks                        | sorted todolist by tasks       |   
+|                                                    |                   |                         | if todo list has tasks                        | true                           |   
 |                                                    |                   | `descending()`          | if todo list is empty                         | false                          |   
-|                                                    |                   |                         | if todo list has tasks                        | sorted todolist by tasks       |
+|                                                    |                   |                         | if todo list has tasks                        | true                           |
 |                                                    |                   |                         |                                               |                                |   
 
 

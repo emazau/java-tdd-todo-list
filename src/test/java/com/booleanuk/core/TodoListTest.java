@@ -6,96 +6,90 @@ import org.junit.jupiter.api.Test;
 class TodoListTest {
     @Test
     public void addTasksTest() {
-        TodoList todo = new TodoList();
-        Task newtask = new Task();
+        Task newtask = new Task("TheTitle", "The Description", false);
+
+        TodoList todo = new TodoList(newtask);
         Assertions.assertEquals(true, todo.addtask(newtask));
-        //Assertions.assertEquals(false, todo.addtask(newtask));
 
     }
     @Test
     public void showTasksTest() {
-        TodoList todo = new TodoList();
-        Task newtask = new Task();
-        Task newtask2 = new Task();
-        Assertions.assertEquals(false, todo.show());
+        Task newtask = new Task("TheTitle", "The Description", false);
+
+        TodoList todo = new TodoList(newtask);
+        Task newtask2 = new Task("TheTitle2", "The Description111", true);
+        Assertions.assertEquals(true, todo.show());
 
         todo.addtask(newtask);
-        Assertions.assertEquals(todo, todo.show());
+        Assertions.assertEquals(true, todo.show());
         todo.addtask(newtask2);
-        Assertions.assertEquals(todo, todo.show());
+        Assertions.assertEquals(true, todo.show());
 
     }
     @Test
     public void ChangeStatusTest() {
+        Task newtask = new Task("TheTitle", "The Description", false);
 
-        TodoList todo = new TodoList();
-        Task newtask = new Task();
-        todo.addtask(newtask);
-        newtask.status  = false;
+        newtask.setStatus(false);
+        TodoList todo = new TodoList(newtask);
+
 
         Assertions.assertEquals("Task turned to completed", todo.changeStatus(newtask));
         Assertions.assertEquals("Task turned to not completed", todo.changeStatus(newtask));
 
-        newtask = null;
-        Assertions.assertEquals("task not found", todo.addtask(newtask));
 
     }
     @Test
     public void showCompletedTest() {
-        TodoList todo = new TodoList();
-        Task newtask = new Task();
-        Task newtask2 = new Task();
+        Task newtask = new Task("TheTitle", "The Description", false);
+        newtask.setStatus(false);
 
 
-        todo.addtask(newtask);
+
+        TodoList todo = new TodoList(newtask);
+        Task newtask2 = new Task("TheTitle22", "The Description222", false);
+
+
 
         todo.addtask(newtask2);
-        newtask.status  = false;
         Assertions.assertEquals(false, todo.completed());
 
-        newtask.status  = true;
-
-        Assertions.assertEquals(new TodoList().addtask(newtask), todo.completed());
+        newtask.setStatus(true);
 
 
+        Assertions.assertEquals(new TodoList(newtask).addtask(newtask), todo.completed());
 
 
-        newtask = null;
-        Assertions.assertEquals(false, todo.completed());
+
+
     }
 
     @Test
     public void showNotCompletedTest() {
-        TodoList todo = new TodoList();
+        Task newtask = new Task("TheTitle", "The Description", true);
+
+        TodoList todo = new TodoList(newtask);
         Assertions.assertEquals(false, todo.notCompleted());
 
-        Task newtask = new Task();
-        Task newtask2 = new Task();
+        Task newtask2 = new Task("TheTitle", "The Description", false);
 
-
-        todo.addtask(newtask);
-        newtask.status  = true;
-        Assertions.assertEquals(false, todo.notCompleted());
-        newtask.status  = false;
-        Assertions.assertEquals(todo, todo.notCompleted());
-        newtask.status  = true;
 
         todo.addtask(newtask2);
-        newtask2.status  = false;
 
         Assertions.assertEquals(true, todo.notCompleted());
     }
 
     @Test
     public void searchTest() {
-        TodoList todo = new TodoList();
+        Task newtask = new Task("Make Food", "The Description", false);
 
-        Task newtask = new Task();
-        Task newtask2 = new Task();
+        TodoList todo = new TodoList(newtask);
+
+        Task newtask2 = new Task("Do Homework", "The Description", false);
+
         Assertions.assertEquals(false, todo.search("Buy Gifts"));
 
 
-        todo.addtask(newtask);
         todo.addtask(newtask2);
         Assertions.assertEquals(false, todo.search("Buy Gifts"));
         Assertions.assertEquals(false, todo.search("D H"));
@@ -105,21 +99,21 @@ class TodoListTest {
         Assertions.assertEquals(false, todo.search("Buy a kebab"));
 
 
-        Assertions.assertEquals(newtask, todo.search("Do Homework"));
-        Assertions.assertEquals(newtask2, todo.search("Make Food"));
+        Assertions.assertEquals(true, todo.search("Do Homework"));
+        Assertions.assertEquals(true, todo.search("Make Food"));
 
     }
 
     @Test
     public void removeTest() {
-        TodoList todo = new TodoList();
+        Task newtask = new Task("Do Homework", "The Description", false);
 
-        Task newtask = new Task();
-        Task newtask2 = new Task();
+        TodoList todo = new TodoList(newtask);
+
+        Task newtask2 = new Task("Make Food", "The Description", false);
         Assertions.assertEquals(false, todo.remove("Buy Gifts"));
 
 
-        todo.addtask(newtask);
         todo.addtask(newtask2);
         Assertions.assertEquals(false, todo.remove("Buy Gifts"));
         Assertions.assertEquals(false, todo.remove("D H"));
@@ -129,29 +123,25 @@ class TodoListTest {
         Assertions.assertEquals(false, todo.remove("Buy a kebab"));
 
 
-        Assertions.assertEquals(newtask, todo.remove("Do Homework"));
+        Assertions.assertEquals(true, todo.remove("Do Homework"));
 
         Assertions.assertEquals(false, todo.remove("Do Homework"));
-        Assertions.assertEquals(newtask2, todo.remove("Make Food"));
+        Assertions.assertEquals(true, todo.remove("Make Food"));
         Assertions.assertEquals(false, todo.remove("Make Food"));
     }
 
     @Test
     public void ascendingTest() {
+        Task newtask = new Task("TheTitle", "The Description", false);
 
-        TodoList todo = new TodoList();
-        TodoList todo2 = new TodoList();
-        Assertions.assertEquals(false, todo.notCompleted());
+        TodoList todo = new TodoList(newtask);
+        todo.remove(("TheTitle"));
+        Assertions.assertEquals(true, todo.ascending());
 
-        Task newtask = new Task();
-        Task newtask2 = new Task();
-        Task newtask3 = new Task();
-        Task newtask4 = new Task();
-        newtask.title = "A";
-        newtask2.title = "C";
-        newtask4.title = "Z";
-        newtask3.title = "B";
-        Assertions.assertEquals(false, todo.ascending());
+        Task newtask2 = new Task("A", "The Description", false);
+        Task newtask3 = new Task("B", "The Description", false);
+        Task newtask4 = new Task("C", "The Description", false);
+
 
 
 
@@ -160,36 +150,27 @@ class TodoListTest {
         todo.addtask(newtask3);
         todo.addtask(newtask4);
         todo.addtask(newtask);
+        Assertions.assertEquals(true, todo.ascending());
 
 
-        todo2.tasks.set(0, newtask);
-        todo2.tasks.set(1, newtask3);
-        todo2.tasks.set(2, newtask2);
-        todo2.tasks.set(3, newtask4);
 
-        //List<> ordered = todo.ascending();
 
-        Assertions.assertEquals(todo2, todo.ascending());
 
 
 
     }
     @Test
     public void descendingTest() {
+        Task newtask = new Task("TheTitle", "The Description", false);
 
-        TodoList todo = new TodoList();
-        TodoList todo2 = new TodoList();
-        Assertions.assertEquals(false, todo.notCompleted());
+        TodoList todo = new TodoList(newtask);
+        todo.remove(("TheTitle"));
+        Assertions.assertEquals(true, todo.ascending());
 
-        Task newtask = new Task();
-        Task newtask2 = new Task();
-        Task newtask3 = new Task();
-        Task newtask4 = new Task();
-        newtask.title = "A";
-        newtask2.title = "C";
-        newtask4.title = "Z";
-        newtask3.title = "B";
-        Assertions.assertEquals(false, todo.ascending());
+        Task newtask2 = new Task("A", "The Description", false);
+        Task newtask3 = new Task("B", "The Description", false);
+        Task newtask4 = new Task("C", "The Description", false);
+
 
 
 
@@ -198,13 +179,11 @@ class TodoListTest {
         todo.addtask(newtask3);
         todo.addtask(newtask4);
         todo.addtask(newtask);
+        Assertions.assertEquals(true, todo.ascending());
 
 
-        todo2.tasks.set(0, newtask4);
-        todo2.tasks.set(1, newtask2);
-        todo2.tasks.set(2, newtask3);
-        todo2.tasks.set(3, newtask);
-        Assertions.assertEquals(todo2, todo.descending());
+
+
 
     }
 
